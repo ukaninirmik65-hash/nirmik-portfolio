@@ -125,8 +125,12 @@ The navbar includes a smoothly moving active-section indicator and a keyboard-fr
 
 Field-specific validation, submission errors, loading, and success use independent message areas. API errors persist through edits until dismissed or retried. The form resets only after an explicitly successful response; failed or unconfirmed responses preserve the complete inquiry. The browser-only mock fixture at `/tests/browser/form.html` is available in development and excluded from production. It never sends email.
 
-GitHub excludes build output, dependencies, local environment files, and test artifacts. The owner-provided public form identifier is configured. See `VERIFICATION.md` for actual submission checks and remaining Gmail inbox confirmation.
+GitHub excludes build output, dependencies, local environment files, and test artifacts. The owner-provided public form identifier is configured. Real website submission and Gmail Inbox receipt have been verified; see `QA-REPORT.md`.
 
 ## Contact redesign verification
 
 The contact dialog has a native modal focus boundary, Escape and backdrop dismissal, scroll locking, and focus restoration. Optional page/timeline fields accept every existing choice but no longer block an initial message when left blank. Supplied optional values are validated and all fields are included in Web3Forms submissions. Email subjects identify the client and service, and Reply-To uses the submitted client email. The access key must be associated with the destination Gmail account. No Gmail password or server secret is needed in this frontend.
+
+## End-to-end delivery verification
+
+A real test was submitted through the deployed contact dialog on 4 November 2026. Web3Forms reported success, the form reset, and the owner confirmed arrival in the Gmail **Inbox**. See `QA-REPORT.md` for all QA results.

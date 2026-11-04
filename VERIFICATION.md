@@ -102,3 +102,7 @@ The ZIP contains source, project assets, package manifest and lockfile, Vite con
 - Desktop (1440px) and mobile (390px) dialog checks: no horizontal overflow, initial input focus, Escape closure, focus restoration, scroll unlocking, preserved draft on reopen, and service-card preselection. Browser console showed no warnings or errors.
 - Mocked transport checks confirmed one request on double-click, loading/disabled states, persistent errors, retained input on failure, and reset only after confirmed success.
 - Actual unconfigured-form check displayed a separate configuration error, retained input, and never displayed success. No real Web3Forms key was provided locally. Successful real submission and Gmail receipt remain unverified.
+
+## Final live delivery QA — 4 November 2026
+
+The owner supplied the Web3Forms public form identifier. One real test submission through the deployed portfolio returned success and reset the form correctly. The owner confirmed receipt in the Gmail **Inbox**. The original screenshot issue is resolved. Additional fixes keep the close button visible during scrolling, focus submission feedback, explain the minimum message length, and provide an honest fallback if configuration is removed. All 17 automated tests and the production build pass. See `QA-REPORT.md` for the complete scope and observed results.
