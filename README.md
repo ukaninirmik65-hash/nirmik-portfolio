@@ -134,3 +134,11 @@ The contact dialog has a native modal focus boundary, Escape and backdrop dismis
 ## End-to-end delivery verification
 
 A real test was submitted through the deployed contact dialog on 4 November 2026. Web3Forms reported success, the form reset, and the owner confirmed arrival in the Gmail **Inbox**. See `QA-REPORT.md` for all QA results.
+
+## Developer cursor
+
+A small code glyph and pointer dot follow the mouse, with a softly delayed ring and restrained halo. Buttons/links expand the ring, cards use a rounded focus shape, and images use a focus-frame state without altering the image. Theme colors come from the existing CSS variables.
+
+Use the code icon beside the theme toggle to switch back to the standard cursor; the preference is saved locally. The effect is enabled only for fine, hover-capable pointers at desktop widths with reduced motion off and forced colors off. Touch/mobile, editable controls, text selection, keyboard input, scrolling, and the native contact dialog keep the browser cursor. A body portal avoids transformed-header positioning issues; all decorative layers ignore pointer input and are hidden from accessibility APIs.
+
+One requestAnimationFrame loop updates transforms directly and sleeps when settled. No per-frame React state changes, layout measurements, extra animation libraries, card tilting, image filters, or particles are used.

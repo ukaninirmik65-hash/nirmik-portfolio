@@ -32,3 +32,12 @@ The screenshot showed an unconfigured Web3Forms form, not a validation failure. 
 - No browser console errors or warnings observed during the checks. The production build passes.
 
 Remote project/social sites can change independently. The checks above are browser viewport tests, not exhaustive testing on every physical device or browser.
+
+## Developer cursor QA
+
+- Production build and all 17 existing tests pass; no new runtime dependencies. The initial production JS increase is about 1.3 KB gzip.
+- Browser verified: one cursor layer, pointer-events:none, interactive button state, image/card states, working project filter clicks, saved standard-cursor opt-out across reload, and theme-matched dark/light ring colors.
+- Contact dialog immediately restores the native cursor, accepts text input, closes with Escape, and unlocks page scrolling. The original photo retains contain sizing and no CSS filter.
+- At 390px mobile width both the cursor layer and toggle are hidden, the normal cursor is restored, and there is no horizontal overflow. Keyboard navigation also restores the native cursor. No console warnings or errors observed.
+- Reduced-motion, coarse-pointer, and forced-color behavior is guarded in both CSS and matchMedia lifecycle logic. OS accessibility preferences were not changed during this browser check.
+- Performance review: only transform writes on two elements, no layout reads per frame, one loop that stops when settled, and cleanup of listeners/observer/frames on opt-out or unmount. This is not a formal FPS benchmark.

@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { navigation } from "../data/portfolio.js";
 import { Icon } from "./UI.jsx";
 import useTheme from "../hooks/useTheme.js";
+import DeveloperCursor from "./DeveloperCursor.jsx";
 import useActiveSection from '../hooks/useActiveSection.js';
 
 export default function Header() {
@@ -87,6 +88,7 @@ export default function Header() {
             ))}
         </nav>
         <div className="header-actions">
+          <DeveloperCursor />
           <button
             type="button"
             className="icon-button"
