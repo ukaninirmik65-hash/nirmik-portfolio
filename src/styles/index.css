@@ -2372,3 +2372,35 @@ h1 > .hero-title-lines { display: block; color: var(--text); }
   .developer-cursor[data-mode="image"] .cursor-ring { transform: scale(1.25); border-radius: 10px; opacity: .7; }
   .developer-cursor[data-mode="image"] .cursor-code { visibility: hidden; }
 }
+
+/* The contact dialog is the single viewport-bounded form scroll container. */
+.contact-dialog {
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: var(--muted) var(--bg);
+  scroll-behavior: smooth;
+}
+/* Chromium/Safari: explicit slim width and rounded thumb. Firefox uses thin above. */
+@supports selector(::-webkit-scrollbar) {
+  .contact-dialog { scrollbar-width: auto; scrollbar-color: auto; }
+  .contact-dialog::-webkit-scrollbar { width: 8px; }
+  .contact-dialog::-webkit-scrollbar-track { background: var(--bg); margin-block: 14px; }
+  .contact-dialog::-webkit-scrollbar-thumb {
+    background: var(--muted);
+    border: 2px solid var(--bg);
+    border-radius: 999px;
+    min-height: 36px;
+  }
+  .contact-dialog::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+  .contact-dialog::-webkit-scrollbar-button { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .contact-dialog { scroll-behavior: auto; }
+}
+@media (forced-colors: active) {
+  .contact-dialog { scrollbar-color: auto; scrollbar-width: auto; }
+  .contact-dialog::-webkit-scrollbar-track { background: Canvas; }
+  .contact-dialog::-webkit-scrollbar-thumb { background: ButtonText; border-color: Canvas; }
+}
