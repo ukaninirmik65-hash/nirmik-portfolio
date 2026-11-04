@@ -17,11 +17,12 @@
       content="Thoughtful code. Meaningful experiences. React interfaces and responsive websites, built with care."
     />
     <meta name="twitter:card" content="summary" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.svg?v=nu-fold" type="image/svg+xml" />
     <script>
       try {
         document.documentElement.dataset.theme =
           localStorage.getItem("nirmik-theme") === "light" ? "light" : "dark";
+        document.querySelector('link[rel="icon"]').href = document.documentElement.dataset.theme === "light" ? "/favicon-light.svg?v=nu-fold" : "/favicon.svg?v=nu-fold";
       } catch {}
     </script>
   </head>

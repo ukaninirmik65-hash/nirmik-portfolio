@@ -50,3 +50,12 @@ Remote project/social sites can change independently. The checks above are brows
 - Browser checks at 1440px desktop, 768px tablet and 320px mobile widths showed no horizontal overflow or clipped names. All card tap targets exceeded 44px. No browser console warnings/errors observed.
 - React is the only floating logo. Browser confirmed its animation runs in view and pauses off screen; floating is disabled at tablet/mobile widths. Reduced-motion hooks and CSS disable motion; OS reduced-motion settings were not changed during this check.
 - No new libraries or remote logo requests. The production build and all 17 existing tests pass.
+
+## New NU Fold logo identity
+
+- Original shared-stem NU mark and outlined Nirmik Ukani wordmark replace the previous branding in navbar, footer, portrait caption, About monogram, service invitation and favicon.
+- The existing navbar flex structure is unchanged: desktop height remains 86px, navigation width remains 405.78px, and the logo slot is 105×45px (previously approximately 104.66×45px).
+- SVG paths were validated for finite coordinates. The complete name renders correctly without runtime fonts. Standalone SVG icon and wordmark, plus dark/light favicons, are included.
+- Reviewed both color themes and favicon sizes 16, 24, 32 and 48px. Website favicon changes with the theme toggle and retains the correct theme after reload.
+- Browser checks at desktop, 768px tablet and 320px mobile widths: no horizontal overflow, working mobile menu, five correct logo placements, no broken images or console errors.
+- Global theme colors, form fields/submission, project data, photo and section content are unchanged. No logo-processing tools or font files are shipped as dependencies.

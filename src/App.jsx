@@ -1,3 +1,4 @@
+import BrandLogo from "./components/BrandLogo.jsx";
 import { useState } from "react";
 import {
   MotionConfig,
@@ -61,7 +62,7 @@ export default function App() {
       <footer className="footer wrap">
         <div className="footer-top">
           <a className="wordmark" href="#home" aria-label="Nirmik Ukani home">
-            nirmik<span>✳</span>
+            <BrandLogo />
           </a>
           <p>
             Thoughtful interfaces.

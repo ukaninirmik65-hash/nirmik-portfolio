@@ -1,3 +1,4 @@
+import BrandLogo from "../components/BrandLogo.jsx";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { profile, skills, experience } from "../data/portfolio.js";
@@ -103,7 +104,7 @@ export function Hero() {
               <strong>Nirmik Ukani</strong>
               <span>Frontend developer · Gujarat, IN</span>
             </div>
-            <span className="signature">nu.</span>
+            <span className="signature"><BrandLogo iconOnly /></span>
           </div>
         </Reveal>
       </div>
@@ -159,7 +160,7 @@ export function About() {
       <div className="about-grid">
         <Reveal className="about-aside">
           <div className="monogram" aria-hidden="true">
-            n<span>u</span>.<Icon name="arrow" size={24} />
+            <BrandLogo iconOnly />
           </div>
           <p>
             Frontend developer.

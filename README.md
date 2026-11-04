@@ -146,3 +146,7 @@ One requestAnimationFrame loop updates transforms directly and sleeps when settl
 ## Interactive Tech Stack
 
 The Skills-only showcase lives in `src/sections/InteractiveSkills.jsx` with isolated styles in `src/styles/tech-stack.css`. It keeps the 11 confirmed technologies in four groups, with keyboard/tap selection, always-visible labels, beginner distinctions, existing theme variables, one viewport-paused floating logo, and reduced-motion guards. Ten technology marks are bundled from the installed icon package; REST API Integration uses a text badge because it has no official brand logo.
+
+## NU Fold brand identity
+
+The custom NU monogram and outlined full-name wordmark replace the former star/lowercase logo, letter monograms and favicon. All placements use `src/components/BrandLogo.jsx`; downloadable SVGs are in `public/brand/`. Favicon variants switch with the existing website theme. Typography is outlined from the existing Space Grotesk family, so the logo loads without font dependencies. No new runtime packages were added.

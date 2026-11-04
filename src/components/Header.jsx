@@ -1,3 +1,4 @@
+import BrandLogo from "./BrandLogo.jsx";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { navigation } from "../data/portfolio.js";
@@ -62,7 +63,7 @@ export default function Header() {
           aria-label="Nirmik Ukani home"
           onClick={() => setOpen(false)}
         >
-          nirmik<span>✳</span>
+          <BrandLogo />
         </a>
         <nav className="desktop-nav" aria-label="Main navigation">
           {navigation

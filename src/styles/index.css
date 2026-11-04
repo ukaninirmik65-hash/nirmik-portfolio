@@ -245,19 +245,11 @@ section[id] {
   height: 86px;
 }
 .wordmark {
-  font-family: var(--heading);
-  font-size: 30px;
-  letter-spacing: -0.08em;
-  font-weight: 600;
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-}
-.wordmark > span {
-  color: var(--accent);
-  font-size: 34px;
-  line-height: 1;
-  transform: translateY(1px);
+  flex-shrink: 0;
+  width: 105px;
+  height: 45px;
 }
 .desktop-nav {
   display: flex;
@@ -449,9 +441,11 @@ h1 > span {
   margin-top: 5px;
 }
 .signature {
-  font-family: var(--heading);
-  font-size: 34px;
-  letter-spacing: -0.1em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 51px;
   color: var(--accent);
 }
 .hero-bottom {
@@ -525,22 +519,12 @@ h1 > span {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--heading);
-  font-size: 91px;
-  letter-spacing: -0.13em;
   border: 1px solid var(--line);
   border-radius: 5px;
-  position: relative;
-  line-height: 1;
 }
-.monogram > span {
-  color: var(--accent);
-}
-.monogram > svg {
-  position: absolute;
-  right: 12px;
-  top: 14px;
-  color: var(--accent);
+.monogram > .brand-logo {
+  width: 96px;
+  height: 96px;
 }
 .about-aside > p {
   font-size: 14px;
@@ -1184,9 +1168,10 @@ summary::-webkit-details-marker {
 .service-invite > a:hover {
   color: var(--ink);
 }
-.asterisk {
-  font-size: 45px;
-  line-height: 1;
+.brand-invite-mark {
+  display: block;
+  width: 45px;
+  height: 45px;
   margin-bottom: 24px;
 }
 .process-grid {
@@ -1738,10 +1723,8 @@ summary::-webkit-details-marker {
     height: 72px;
   }
   .wordmark {
-    font-size: 27px;
-  }
-  .wordmark > span {
-    font-size: 31px;
+    width: 95px;
+    height: 40.5px;
   }
   .desktop-nav,
   .header-cta {
@@ -2005,8 +1988,9 @@ summary::-webkit-details-marker {
   .service-card > a {
     font-size: 10px;
   }
-  .asterisk {
-    font-size: 41px;
+  .brand-invite-mark {
+    width: 41px;
+    height: 41px;
   }
   .process-grid {
     grid-template-columns: 1fr;
@@ -2404,3 +2388,9 @@ h1 > .hero-title-lines { display: block; color: var(--text); }
   .contact-dialog::-webkit-scrollbar-track { background: Canvas; }
   .contact-dialog::-webkit-scrollbar-thumb { background: ButtonText; border-color: Canvas; }
 }
+
+/* NU Fold brand assets retain the existing logo slots and theme colors. */
+.brand-logo { display: block; width: 100%; height: 100%; color: var(--accent); flex-shrink: 0; }
+.brand-logo .brand-name { fill: var(--text); }
+.signature > .brand-logo { width: 38px; height: 38px; }
+.brand-invite-mark > .brand-logo { color: var(--ink); }

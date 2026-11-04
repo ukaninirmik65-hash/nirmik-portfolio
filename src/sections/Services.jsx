@@ -1,3 +1,4 @@
+import BrandLogo from "../components/BrandLogo.jsx";
 import { services, process, faqs } from "../data/portfolio.js";
 import { Icon, Reveal, SectionTitle } from "../components/UI.jsx";
 
@@ -39,8 +40,8 @@ export function Services({ onSelect }) {
           </Reveal>
         ))}
         <Reveal className="service-card service-invite">
-          <span className="asterisk" aria-hidden="true">
-            ✳
+          <span className="brand-invite-mark" aria-hidden="true">
+            <BrandLogo iconOnly />
           </span>
           <h3>
             Have something
