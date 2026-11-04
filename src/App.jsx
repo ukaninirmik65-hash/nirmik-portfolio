@@ -6,6 +6,7 @@ import {
   useReducedMotion,
   useSpring,
 } from "motion/react";
+import { Analytics } from "@vercel/analytics/react";
 import Header from "./components/Header.jsx";
 import { Icon } from "./components/UI.jsx";
 import { navigation } from "./data/portfolio.js";
@@ -79,6 +80,7 @@ export default function App() {
           <span>Gujarat, India · Built with React</span>
         </div>
       </footer>
+      <Analytics />
     </MotionConfig>
   );
 }
