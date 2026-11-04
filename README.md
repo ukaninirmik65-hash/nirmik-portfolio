@@ -25,9 +25,12 @@ The ZIP includes a prebuilt production site in `dist/`, as well as the full edit
 
 ## Inquiry form — no automatic pricing
 
+The contact section now opens a focused, keyboard-accessible dialog inspired by the supplied reference. Service-card inquiry links open it with the selected service. Closing and reopening the dialog preserves the draft.
+
 The form includes:
 
-- Name, email, optional WhatsApp/phone, and optional company.
+- Required name, email, service, and project message, plus optional WhatsApp/phone.
+- An expandable **Additional project details** section containing optional company, page count, timeline, design readiness, reference URL, and feature selections.
 - All seven confirmed frontend service choices.
 - **Number of pages:** 1, 2–3, 4–5, 6–10, 11–15, more than 15, and not sure yet.
 - **Preferred timeline:** within 1 week, 2 weeks, 3–4 weeks, 1–2 months, flexible, and not sure yet.
@@ -38,7 +41,7 @@ The form includes:
 
 There are **no fixed prices, price ranges, packages, price fields, or automatic pricing calculations**. Nirmik personally reviews each brief and provides a quotation. Timeline selections are visitor preferences, not promised delivery times.
 
-The site's single shared Contact / Project Inquiry form now submits through Web3Forms. **Send my inquiry** validates and posts every field as `FormData` to `https://api.web3forms.com/submit` with `Accept: application/json`. The button and controls are disabled during sending, with a synchronous guard against duplicate requests. API failures, network failures, timeouts, and missing configuration preserve the entered data. The form resets only after HTTP success plus `success: true` from Web3Forms. The client's email is explicitly sent as `replyto`.
+The site's single shared Contact / Project Inquiry form now submits through Web3Forms. **Send message** validates and posts every field as `FormData` to `https://api.web3forms.com/submit` with `Accept: application/json`. The button and controls are disabled during sending, with a synchronous guard against duplicate requests. API failures, network failures, timeouts, and missing configuration preserve the entered data. The form resets only after HTTP success plus `success: true` from Web3Forms. The client's email is explicitly sent as `replyto`.
 
 The hidden `botcheck` honeypot follows the official checkbox format. Checked honeypots are blocked locally. Optional direct email/WhatsApp drafts and existing contact links remain available as alternatives; preparing a draft does not submit the form.
 
@@ -131,3 +134,7 @@ The navbar includes a smoothly moving active-section indicator and a keyboard-fr
 Field-specific validation, submission errors, loading, and success use independent message areas. API errors persist through edits until dismissed or retried. The form resets only after an explicitly successful response; failed or unconfirmed responses preserve the complete inquiry. The browser-only mock fixture at `/tests/browser/form.html` is available in development and excluded from production. It never sends email.
 
 GitHub excludes build output, dependencies, local environment files, and test artifacts. Configure your own Web3Forms key as described above; a real successful submission and email delivery remain unverified until that key is provided.
+
+## Contact redesign verification
+
+The contact dialog has a native modal focus boundary, Escape and backdrop dismissal, scroll locking, and focus restoration. Optional page/timeline fields accept every existing choice but no longer block an initial message when left blank. Supplied optional values are validated and all fields are included in Web3Forms submissions. Email subjects identify the client and service, and Reply-To uses the submitted client email. The access key must be associated with the destination Gmail account. No Gmail password or server secret is needed in this frontend.

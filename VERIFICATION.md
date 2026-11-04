@@ -93,3 +93,12 @@ The ZIP contains source, project assets, package manifest and lockfile, Vite con
 - Browser mock fixture: double-click generated one request with a disabled sending state; API failures retained input, errors remained during edits, and dismissal worked. An unconfirmed response produced an error, never success. Confirmed mock success reset the form and showed only the success message.
 - Website browser console reported no warnings or errors. Mock tests do not demonstrate live email delivery.
 - No Web3Forms key was supplied; live successful submission and inbox delivery remain pending configuration.
+
+## Reference-inspired contact redesign
+
+- Replaced the long inline form with a focused native contact dialog and direct email/WhatsApp alternatives. The reference site's contact layout was reviewed visually; no reference credentials, identity, or services were copied.
+- Required first-message fields: name, email, frontend service, and project description. Phone remains optional. Existing page-count, timeline, company, design, website, and feature choices remain available in an optional expanded brief.
+- All 17 automated tests pass, including the new optional-detail validation and Gmail Reply-To payload coverage.
+- Desktop (1440px) and mobile (390px) dialog checks: no horizontal overflow, initial input focus, Escape closure, focus restoration, scroll unlocking, preserved draft on reopen, and service-card preselection. Browser console showed no warnings or errors.
+- Mocked transport checks confirmed one request on double-click, loading/disabled states, persistent errors, retained input on failure, and reset only after confirmed success.
+- Actual unconfigured-form check displayed a separate configuration error, retained input, and never displayed success. No real Web3Forms key was provided locally. Successful real submission and Gmail receipt remain unverified.

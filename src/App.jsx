@@ -34,6 +34,11 @@ function Progress() {
 }
 export default function App() {
   const [service, setService] = useState("");
+  const [contactRequest, setContactRequest] = useState(0);
+  const discussService = (value) => {
+    setService(value);
+    setContactRequest((request) => request + 1);
+  };
   return (
     <MotionConfig reducedMotion="user">
       <a className="skip-link" href="#main">
@@ -48,10 +53,10 @@ export default function App() {
         <Skills />
         <Experience />
         <Projects />
-        <Services onSelect={setService} />
+        <Services onSelect={discussService} />
         <Process />
         <FAQ />
-        <Contact service={service} onServiceChange={setService} />
+        <Contact service={service} onServiceChange={setService} request={contactRequest} />
       </main>
       <footer className="footer wrap">
         <div className="footer-top">

@@ -8,7 +8,7 @@ import {
   emptyInquiry,
 } from "../data/inquiry.js";
 import {
-  validateInquiry,
+  validateContact,
   createInquiryMessage,
   emailLink,
   whatsappLink,
@@ -45,8 +45,9 @@ export default function InquiryForm({
   const [isSending, setIsSending] = useState(false);
   const submitting = useRef(false);
   const form = useRef(null);
+  const projectDetails = useRef(null);
   const current = { ...values, service };
-  const errors = validationShown ? validateInquiry(current) : {};
+  const errors = validationShown ? validateContact(current) : {};
   const hasValidationErrors = Object.values(errors).some(Boolean);
   const update = (event) => {
     if (submitting.current) return;
@@ -68,11 +69,13 @@ export default function InquiryForm({
     setSuccessMessage('');
   };
   const validate = () => {
-    const next = validateInquiry(current);
+    const next = validateContact(current);
     setValidationShown(true);
     if (Object.keys(next).length) {
       setPrepared(false);
-      form.current.elements.namedItem(Object.keys(next)[0])?.focus();
+      const invalid = form.current.elements.namedItem(Object.keys(next)[0]);
+      if (invalid?.closest("details")) invalid.closest("details").open = true;
+      invalid?.focus();
       return false;
     }
     return true;
@@ -93,6 +96,7 @@ export default function InquiryForm({
       setValues({ ...emptyInquiry });
       onServiceChange("");
       form.current.reset();
+      if (projectDetails.current) projectDetails.current.open = false;
       setValidationShown(false);
       setSuccessMessage(
         "Thank you! Your inquiry was submitted successfully. I’ll review your brief and get back to you.",
@@ -146,12 +150,17 @@ export default function InquiryForm({
     setSuccessMessage('');
   }
   return (
-    <div className="inquiry-panel">
+    <div className="inquiry-panel contact-form-panel">
       <div className="inquiry-top">
-        <span>LET’S HEAR YOUR IDEA</span>
+        <span>START A CONVERSATION</span>
         <Icon name="arrow" size={24} />
       </div>
-      <form ref={form} onSubmit={submit} noValidate aria-busy={isSending}>
+      <div className="contact-form-intro">
+        <h3 id="inquiry-title">Let’s build <em>something good.</em></h3>
+        <p>Tell me what you have in mind. I’ll reply to your email to discuss the next step.</p>
+        <span>Fields marked * are required.</span>
+      </div>
+      <form aria-labelledby="inquiry-title" ref={form} onSubmit={submit} noValidate aria-busy={isSending}>
         <input
           type="checkbox"
           name="botcheck"
@@ -200,63 +209,12 @@ export default function InquiryForm({
               placeholder="Optional — include country code"
             />
           </Field>
-          <Field
-            name="company"
-            label="Company / organization"
-            error={errors.company}
-          >
-            <input
-              {...attributes("company")}
-              autoComplete="organization"
-              maxLength={150}
-              placeholder="Optional"
-            />
-          </Field>
           {select(
             "service",
             "What can I help you with?",
             services.map((s) => ({ value: s.id, label: s.name })),
             true,
           )}
-          <div className="form-row">
-            {select("pages", "Number of pages", pageOptions, true)}
-            {select(
-              "duration",
-              "Preferred project timeline",
-              durationOptions,
-              true,
-            )}
-          </div>
-          {select("design", "Design readiness", designOptions)}
-          <Field
-            name="website"
-            label="Existing website / reference URL"
-            error={errors.website}
-          >
-            <input
-              {...attributes("website")}
-              type="url"
-              maxLength={500}
-              placeholder="https://example.com (optional)"
-            />
-          </Field>
-          <fieldset className="feature-options">
-            <legend>
-              Anything else you need? <span>Optional</span>
-            </legend>
-            {featureOptions.map((feature) => (
-              <label key={feature}>
-                <input
-                  type="checkbox"
-                  name="features"
-                  value={feature}
-                  checked={values.features.includes(feature)}
-                  onChange={() => toggleFeature(feature)}
-                />
-                <span>{feature}</span>
-              </label>
-            ))}
-          </fieldset>
           <Field
             name="message"
             label="Tell me about your project"
@@ -265,13 +223,69 @@ export default function InquiryForm({
           >
             <textarea
               {...attributes("message")}
-              rows={4}
+              rows={5}
               minLength={20}
               maxLength={3000}
               required
               placeholder="Your goals, desired features, and anything I should know…"
             />
           </Field>
+          <details className="project-details" ref={projectDetails}>
+            <summary><span>Additional project details <small>Optional</small></span><Icon name="plus" size={18} /></summary>
+            <div className="project-details-content">
+              <p>Have a clearer brief? Add the details below, or leave them for our conversation.</p>
+              <Field
+                name="company"
+                label="Company / organization"
+                error={errors.company}
+              >
+                <input
+                  {...attributes("company")}
+                  autoComplete="organization"
+                  maxLength={150}
+                  placeholder="Optional"
+                />
+              </Field>
+              <div className="form-row">
+                {select("pages", "Number of pages", pageOptions)}
+                {select(
+                  "duration",
+                  "Preferred project timeline",
+                  durationOptions,
+                )}
+              </div>
+              {select("design", "Design readiness", designOptions)}
+              <Field
+                name="website"
+                label="Existing website / reference URL"
+                error={errors.website}
+              >
+                <input
+                  {...attributes("website")}
+                  type="url"
+                  maxLength={500}
+                  placeholder="https://example.com (optional)"
+                />
+              </Field>
+              <fieldset className="feature-options">
+                <legend>
+                  Anything else you need? <span>Optional</span>
+                </legend>
+                {featureOptions.map((feature) => (
+                  <label key={feature}>
+                    <input
+                      type="checkbox"
+                      name="features"
+                      value={feature}
+                      checked={values.features.includes(feature)}
+                      onChange={() => toggleFeature(feature)}
+                    />
+                    <span>{feature}</span>
+                  </label>
+                ))}
+              </fieldset>
+            </div>
+          </details>
           <p className="personal-quote">
             <Icon name="person" size={15} />I personally review every brief and
             provide a custom quotation.
@@ -281,12 +295,12 @@ export default function InquiryForm({
             className="button form-submit"
             disabled={isSending}
           >
-            {isSending ? "Sending…" : "Send my inquiry"}{" "}
+            {isSending ? "Sending…" : "Send message"}{" "}
             <Icon name="right" size={18} />
           </button>
           <p className="privacy-note">
-            Your inquiry is sent securely through Web3Forms. I’ll reply to the
-            email address you provide.
+            No email app needed. Your message is submitted directly, and I’ll
+            reply to the email address you provide.
           </p>
           <button
             type="button"
@@ -316,8 +330,8 @@ export default function InquiryForm({
           )}
         </fieldset>
         {isSending && <p className="submission-loading" role="status"><span className="sending-dot" aria-hidden="true"/>Sending your inquiry…</p>}
-        {apiError && <div className="submission-alert submission-error" role="alert"><div><strong>Your inquiry was not sent</strong><p>{apiError}</p></div><button type="button" className="icon-button" aria-label="Dismiss submission error" onClick={() => setApiError('')}><Icon name="close" size={16}/></button></div>}
-        {successMessage && <div className="submission-alert submission-success" role="status"><Icon name="check" size={20}/><div><strong>Inquiry submitted</strong><p>{successMessage}</p></div></div>}
+        {apiError && <div className="submission-alert submission-error" role="alert"><div><strong>Message not sent</strong><p>{apiError}</p></div><button type="button" className="icon-button" aria-label="Dismiss submission error" onClick={() => setApiError('')}><Icon name="close" size={16}/></button></div>}
+        {successMessage && <div className="submission-alert submission-success" role="status"><Icon name="check" size={20}/><div><strong>Message submitted</strong><p>{successMessage}</p></div></div>}
         {validPrepared && <p className="form-status draft-status" role="status">Your draft is ready. Review and send it in your email or WhatsApp app. This draft has not been submitted.</p>}
       </form>
     </div>

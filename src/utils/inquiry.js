@@ -46,6 +46,14 @@ export function validateInquiry(values) {
   return errors;
 }
 
+// The contact dialog needs only the essentials; detailed inquiries remain supported.
+export function validateContact(values) {
+  const errors = validateInquiry(values);
+  if (!values.pages) delete errors.pages;
+  if (!values.duration) delete errors.duration;
+  return errors;
+}
+
 export function createInquiryMessage(values) {
   const service =
     services.find((item) => item.id === values.service)?.name ||

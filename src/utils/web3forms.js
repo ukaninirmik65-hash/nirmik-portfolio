@@ -51,7 +51,7 @@ export function buildSubmission(values, accessKey, botcheck = false) {
   data.set("design_readiness", optionLabel(designOptions, values.design));
   data.set("access_key", accessKey.trim());
   data.set("replyto", values.email.trim());
-  data.set("subject", `Portfolio inquiry — ${service}`);
+  data.set("subject", `New portfolio inquiry — ${values.name.trim().replace(/[\r\n]/g, " ")} · ${service}`);
   data.set("from_name", "Nirmik Ukani Portfolio");
   data.set("form_name", "Contact / Project Inquiry");
   if (botcheck) data.set("botcheck", "on");
