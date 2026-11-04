@@ -142,3 +142,7 @@ A small code glyph and pointer dot follow the mouse, with a softly delayed ring 
 Use the code icon beside the theme toggle to switch back to the standard cursor; the preference is saved locally. The effect is enabled only for fine, hover-capable pointers at desktop widths with reduced motion off and forced colors off. Touch/mobile, editable controls, text selection, keyboard input, scrolling, and the native contact dialog keep the browser cursor. A body portal avoids transformed-header positioning issues; all decorative layers ignore pointer input and are hidden from accessibility APIs.
 
 One requestAnimationFrame loop updates transforms directly and sleeps when settled. No per-frame React state changes, layout measurements, extra animation libraries, card tilting, image filters, or particles are used.
+
+## Interactive Tech Stack
+
+The Skills-only showcase lives in `src/sections/InteractiveSkills.jsx` with isolated styles in `src/styles/tech-stack.css`. It keeps the 11 confirmed technologies in four groups, with keyboard/tap selection, always-visible labels, beginner distinctions, existing theme variables, one viewport-paused floating logo, and reduced-motion guards. Ten technology marks are bundled from the installed icon package; REST API Integration uses a text badge because it has no official brand logo.

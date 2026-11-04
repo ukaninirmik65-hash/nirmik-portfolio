@@ -41,3 +41,12 @@ Remote project/social sites can change independently. The checks above are brows
 - At 390px mobile width both the cursor layer and toggle are hidden, the normal cursor is restored, and there is no horizontal overflow. Keyboard navigation also restores the native cursor. No console warnings or errors observed.
 - Reduced-motion, coarse-pointer, and forced-color behavior is guarded in both CSS and matchMedia lifecycle logic. OS accessibility preferences were not changed during this browser check.
 - Performance review: only transform writes on two elements, no layout reads per frame, one loop that stops when settled, and cleanup of listeners/observer/frames on opt-out or unmount. This is not a formal FPS benchmark.
+
+## Interactive Tech Stack — Skills-only replacement
+
+- Replaced the existing Skills markup in place; exactly one Skills section remains. Other section components, navbar, cursor, contact forms, global styles, theme variables and dependencies were not modified.
+- Exactly 11 technologies in the four requested groups. Ten locally bundled technology logo SVGs render; REST has no official brand logo and uses a clearly labeled REST/API text badge. No extra technology or proficiency claim was added.
+- Verified every card's selection and detail text, keyboard activation, beginner labels, and dark/light colors. Names are always visible without hover.
+- Browser checks at 1440px desktop, 768px tablet and 320px mobile widths showed no horizontal overflow or clipped names. All card tap targets exceeded 44px. No browser console warnings/errors observed.
+- React is the only floating logo. Browser confirmed its animation runs in view and pauses off screen; floating is disabled at tablet/mobile widths. Reduced-motion hooks and CSS disable motion; OS reduced-motion settings were not changed during this check.
+- No new libraries or remote logo requests. The production build and all 17 existing tests pass.

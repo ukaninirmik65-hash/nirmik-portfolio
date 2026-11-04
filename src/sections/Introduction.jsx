@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { profile, skills, experience } from "../data/portfolio.js";
+import InteractiveSkills from "./InteractiveSkills.jsx";
 import {
   Icon,
   Reveal,
@@ -199,43 +200,7 @@ export function About() {
 }
 
 export function Skills() {
-  return (
-    <section id="skills" className="section section-tinted">
-      <div className="wrap">
-        <SectionTitle
-          number="02"
-          label="THE TOOLKIT"
-          title={
-            <>
-              The tools behind
-              <br />
-              <em>the experience.</em>
-            </>
-          }
-          description="A focused frontend toolkit, and a commitment to keep learning."
-        />
-        <div className="skills-grid">
-          {skills.map((skill, i) => (
-            <Reveal
-              key={skill.name}
-              className="skill-card"
-              delay={(i % 4) * 0.055} distance={14}
-            >
-              <Icon name={skill.icon} size={28} />
-              <div>
-                <h3>{skill.name}</h3>
-                <span>{skill.category}</span>
-              </div>
-              {skill.category === "Beginner" && <i className="learning-dot" />}
-            </Reveal>
-          ))}
-        </div>
-        <p className="section-note">
-          TypeScript and Next.js are part of my learning journey.
-        </p>
-      </div>
-    </section>
-  );
+  return <InteractiveSkills />;
 }
 
 export function Experience() {
