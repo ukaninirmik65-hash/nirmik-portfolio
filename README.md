@@ -1,0 +1,127 @@
+# Nirmik Ukani — Frontend Developer portfolio
+
+A responsive React/Vite portfolio for Nirmik Ukani. It includes Home, About, Skills, Experience, Projects, Services, Work Process, Contact, and a short FAQ. The design uses charcoal, warm white, and a soft green accent, with dark/light modes and purposeful motion.
+
+## Run locally
+
+1. Extract the complete ZIP.
+2. Open a terminal in the extracted project folder containing `package.json`.
+3. Use Node.js **22.12+** (Node 24 LTS is also suitable).
+
+```bash
+npm install
+npm run dev
+```
+
+Open the local address printed by Vite, normally `http://127.0.0.1:5173`.
+
+```bash
+npm test
+npm run build
+npm run preview
+```
+
+The ZIP includes a prebuilt production site in `dist/`, as well as the full editable source. The included lockfile records the installed dependency versions. Dependencies are installed with `npm install`; a platform-specific `node_modules` folder is intentionally excluded from the ZIP.
+
+## Inquiry form — no automatic pricing
+
+The form includes:
+
+- Name, email, optional WhatsApp/phone, and optional company.
+- All seven confirmed frontend service choices.
+- **Number of pages:** 1, 2–3, 4–5, 6–10, 11–15, more than 15, and not sure yet.
+- **Preferred timeline:** within 1 week, 2 weeks, 3–4 weeks, 1–2 months, flexible, and not sure yet.
+- Optional design-readiness dropdown.
+- Optional existing website/reference URL.
+- Feature checkboxes and a required project brief.
+- Accessible validation, Web3Forms submission, and optional direct-contact drafts.
+
+There are **no fixed prices, price ranges, packages, price fields, or automatic pricing calculations**. Nirmik personally reviews each brief and provides a quotation. Timeline selections are visitor preferences, not promised delivery times.
+
+The site's single shared Contact / Project Inquiry form now submits through Web3Forms. **Send my inquiry** validates and posts every field as `FormData` to `https://api.web3forms.com/submit` with `Accept: application/json`. The button and controls are disabled during sending, with a synchronous guard against duplicate requests. API failures, network failures, timeouts, and missing configuration preserve the entered data. The form resets only after HTTP success plus `success: true` from Web3Forms. The client's email is explicitly sent as `replyto`.
+
+The hidden `botcheck` honeypot follows the official checkbox format. Checked honeypots are blocked locally. Optional direct email/WhatsApp drafts and existing contact links remain available as alternatives; preparing a draft does not submit the form.
+
+## Web3Forms configuration — access key required
+
+**No real access key has been supplied. Live successful submission and inbox delivery have not been verified.** The included production build therefore has no configured key and shows a clear error without deleting the visitor's input.
+
+1. Obtain your Web3Forms access key associated with **ukaninirmik65@gmail.com**. The key determines the destination inbox; changing `profile.email` does not change Web3Forms routing.
+2. Copy `.env.example` to `.env.local` (PowerShell: `Copy-Item .env.example .env.local`).
+3. Replace `YOUR_WEB3FORMS_ACCESS_KEY` with your actual key:
+
+```dotenv
+VITE_WEB3FORMS_ACCESS_KEY=YOUR_WEB3FORMS_ACCESS_KEY
+```
+
+4. Restart `npm run dev`. For production, run `npm run build` again. Vite embeds this value at build time.
+5. On Vercel, add `VITE_WEB3FORMS_ACCESS_KEY` in the project's Environment Variables for the environments you use, then redeploy. No other variables are required.
+6. Submit a real test through the normal site, confirm Web3Forms reports success, inspect the destination inbox/spam folder for all fields, and verify replying targets the submitted client email. Only then consider live delivery verified.
+
+Web3Forms documents its access key as a **public form identifier**, not a private API secret. It is expected to be visible to the browser. Never add unrelated private API credentials to Vite environment variables. `.env.local` is ignored and excluded from the ZIP.
+
+References: [Reply-To](https://docs.web3forms.com/getting-started/customizations/custom-reply-to), [public access keys](https://docs.web3forms.com/getting-started/faq), [honeypot format](https://docs.web3forms.com/getting-started/customizations/spam-protection/spam-protection). Web3Forms now recommends CAPTCHA over honeypots for stronger protection; the requested honeypot is included, without adding a CAPTCHA dependency or changing your form flow.
+
+## Configuration and editable content
+
+Configure the public Web3Forms key as described above. Keep any unrelated private keys on a server.
+
+| Location                         | Contents                                                                                       |
+| -------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `src/data/portfolio.js`          | Personal details, social links, confirmed skills, four roles, projects, services, process, FAQ |
+| `src/data/inquiry.js`            | Every dropdown option, feature checkbox, and initial form value                                |
+| `src/utils/inquiry.js`           | Validation, message formatting, email and WhatsApp URLs                                        |
+| `src/config/web3forms.js`        | Official endpoint and environment configuration                                                |
+| `src/utils/web3forms.js`         | Complete multipart payload, Reply-To, API/error/timeout handling                               |
+| `src/components/`                | Reusable UI, header, and inquiry form                                                          |
+| `src/sections/`                  | Complete page sections                                                                         |
+| `src/hooks/useTheme.js`          | Theme selection and persistence                                                                |
+| `src/styles/index.css`           | Design tokens, styling, and responsive rules                                                   |
+| `public/images/nirmik-ukani.png` | Exact uploaded portrait                                                                        |
+| `public/images/projects/`        | Actual project screenshots                                                                     |
+| `tests/inquiry.test.js`          | Form, data, URL, and image-integrity tests                                                     |
+| `tests/web3forms.test.js`        | Mocked transport, payload, validation, error and timeout tests                                 |
+| `tests/browser/form.html`        | Explicit mock-only UI fixture for loading, duplicate prevention, reset and retention checks    |
+
+The resume button is hidden while `profile.resume` is `null`. No testimonials or client logos are fabricated. Availability, years of experience, and achievements are not invented.
+
+## Photo preservation
+
+Only the supplied `Professional Corporate Portrait.png` is used for the profile. It was copied without editing, cropping, filtering, resizing, or recompression. Its original **1122×1402** pixels and complete aspect ratio are preserved. CSS uses `width:100%; height:auto; object-fit:contain`. The image container fits the photo; no overlays obscure it.
+
+SHA-256 of both supplied and shipped image:
+
+`26CE277474B2B42443791D9D098D02964ACDE49D08B643347AC961AE4E59FDD9`
+
+## Project accuracy
+
+All seven projects use the actual supplied GitHub repositories. Completion statuses follow the owner's explicit confirmation:
+
+- Completed: ERP-App, Tetris Game, Anita Jewellery, Neelmadhav Public School, Digital Marketing Agency.
+- In Progress: Atal Kriya (`atakKriya-2.O`), Motiwala Perfumes Clone.
+
+Scope disclosures explain ERP's pending modules, Anita's frontend-only storefront, school content placeholders, Atal Kriya's mock/localStorage prototype, and Motiwala's practice-clone nature. The agency project links its credited Figma source. No client relationship is inferred from a repository name.
+
+Anita and school previews are screenshots from their real deployments. Other projects have explicitly labeled illustrated covers, not simulated screenshots. Prior unavailable Tetris/agency deployment links are omitted. ERP and Atal Kriya live demos open login screens; no real credentials are supplied by this portfolio. External deployments may change independently.
+
+## Vercel deployment
+
+Import [the public GitHub repository](https://github.com/ukaninirmik65-hash/nirmik-portfolio) into Vercel. Select the **Vite** preset, build command **`npm run build`**, and output directory **`dist`**. Use the folder containing `package.json` as the project root. Configure `VITE_WEB3FORMS_ACCESS_KEY` before building/deploying.
+
+After deployment, test form choices, navigation, theme switching, and email/WhatsApp links. Add a canonical URL and `og:url` in `index.html` once a real domain is known. No fabricated domain or public deployment is included.
+
+See [Vercel's official Vite documentation](https://vercel.com/docs/frameworks/frontend/vite).
+
+## Accessibility and performance
+
+Semantic headings and landmarks, labeled inputs, visible keyboard focus, a skip link, keyboard-friendly mobile navigation, reduced-motion support, responsive images, and lazy-loaded project screenshots are included. Motion is the only animation engine; native scrolling avoids extra scroll libraries. Fonts use Google Fonts with `display=swap` and system fallbacks. No analytics or tracking is installed.
+
+See `VERIFICATION.md` for the checks actually performed. This is not a formal accessibility certification.
+
+## Interaction refinements
+
+The navbar includes a smoothly moving active-section indicator and a keyboard-friendly mobile menu with Escape dismissal, outside-click dismissal, and scroll locking. Text, section, skill, and project reveals use Motion and honor reduced-motion preferences.
+
+Field-specific validation, submission errors, loading, and success use independent message areas. API errors persist through edits until dismissed or retried. The form resets only after an explicitly successful response; failed or unconfirmed responses preserve the complete inquiry. The browser-only mock fixture at `/tests/browser/form.html` is available in development and excluded from production. It never sends email.
+
+GitHub excludes build output, dependencies, local environment files, and test artifacts. Configure your own Web3Forms key as described above; a real successful submission and email delivery remain unverified until that key is provided.
