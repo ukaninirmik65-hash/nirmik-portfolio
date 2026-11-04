@@ -45,29 +45,21 @@ The site's single shared Contact / Project Inquiry form now submits through Web3
 
 The hidden `botcheck` honeypot follows the official checkbox format. Checked honeypots are blocked locally. Optional direct email/WhatsApp drafts and existing contact links remain available as alternatives; preparing a draft does not submit the form.
 
-## Web3Forms configuration — access key required
+## Web3Forms configuration
 
-**No real access key has been supplied. Live successful submission and inbox delivery have not been verified.** The included production build therefore has no configured key and shows a clear error without deleting the visitor's input.
+The owner-provided Web3Forms public form identifier is configured in `src/config/web3forms.js`, so the deployed website and extracted ZIP can submit without extra setup. Web3Forms access keys are public, browser-visible form identifiers, not Gmail passwords or private API tokens. The destination inbox is determined by the Web3Forms account associated with that key; changing `profile.email` does not change routing.
 
-1. Obtain your Web3Forms access key associated with **ukaninirmik65@gmail.com**. The key determines the destination inbox; changing `profile.email` does not change Web3Forms routing.
-2. Copy `.env.example` to `.env.local` (PowerShell: `Copy-Item .env.example .env.local`).
-3. Replace `YOUR_WEB3FORMS_ACCESS_KEY` with your actual key:
+To override the configured identifier, set `VITE_WEB3FORMS_ACCESS_KEY` in `.env.local` locally or in the Vercel project environment settings, then restart development or rebuild/redeploy. Vite embeds environment values at build time. Local environment files remain ignored by Git. Never put unrelated private credentials in frontend configuration.
 
-```dotenv
-VITE_WEB3FORMS_ACCESS_KEY=YOUR_WEB3FORMS_ACCESS_KEY
-```
+If no usable key is configured, visitors see an upfront availability notice and can prepare a complete email/WhatsApp draft instead of encountering a dead-end submission. Draft preparation is never presented as successful delivery.
 
-4. Restart `npm run dev`. For production, run `npm run build` again. Vite embeds this value at build time.
-5. On Vercel, add `VITE_WEB3FORMS_ACCESS_KEY` in the project's Environment Variables for the environments you use, then redeploy. No other variables are required.
-6. Submit a real test through the normal site, confirm Web3Forms reports success, inspect the destination inbox/spam folder for all fields, and verify replying targets the submitted client email. Only then consider live delivery verified.
+After changing the key, send one clearly labeled test, confirm the API success response, inspect the destination Gmail inbox/spam folder, and verify Reply-To targets the client's email. API acceptance alone does not prove Gmail inbox receipt.
 
-Web3Forms documents its access key as a **public form identifier**, not a private API secret. It is expected to be visible to the browser. Never add unrelated private API credentials to Vite environment variables. `.env.local` is ignored and excluded from the ZIP.
-
-References: [Reply-To](https://docs.web3forms.com/getting-started/customizations/custom-reply-to), [public access keys](https://docs.web3forms.com/getting-started/faq), [honeypot format](https://docs.web3forms.com/getting-started/customizations/spam-protection/spam-protection). Web3Forms now recommends CAPTCHA over honeypots for stronger protection; the requested honeypot is included, without adding a CAPTCHA dependency or changing your form flow.
+References: [Web3Forms public keys](https://web3forms.com/#faq), [Reply-To](https://docs.web3forms.com/getting-started/customizations/custom-reply-to).
 
 ## Configuration and editable content
 
-Configure the public Web3Forms key as described above. Keep any unrelated private keys on a server.
+The public Web3Forms form identifier is configured as described above. Keep any unrelated private keys on a server.
 
 | Location                         | Contents                                                                                       |
 | -------------------------------- | ---------------------------------------------------------------------------------------------- |
@@ -109,7 +101,7 @@ Anita and school previews are screenshots from their real deployments. Other pro
 
 ## Vercel deployment
 
-Import [the public GitHub repository](https://github.com/ukaninirmik65-hash/nirmik-portfolio) into Vercel. Select the **Vite** preset, build command **`npm run build`**, and output directory **`dist`**. Use the folder containing `package.json` as the project root. Configure `VITE_WEB3FORMS_ACCESS_KEY` before building/deploying.
+Import [the public GitHub repository](https://github.com/ukaninirmik65-hash/nirmik-portfolio) into Vercel. Select the **Vite** preset, build command **`npm run build`**, and output directory **`dist`**. Use the folder containing `package.json` as the project root. The included public form identifier works by default; `VITE_WEB3FORMS_ACCESS_KEY` is an optional override.
 
 After deployment, test form choices, navigation, theme switching, and email/WhatsApp links.
 
@@ -133,7 +125,7 @@ The navbar includes a smoothly moving active-section indicator and a keyboard-fr
 
 Field-specific validation, submission errors, loading, and success use independent message areas. API errors persist through edits until dismissed or retried. The form resets only after an explicitly successful response; failed or unconfirmed responses preserve the complete inquiry. The browser-only mock fixture at `/tests/browser/form.html` is available in development and excluded from production. It never sends email.
 
-GitHub excludes build output, dependencies, local environment files, and test artifacts. Configure your own Web3Forms key as described above; a real successful submission and email delivery remain unverified until that key is provided.
+GitHub excludes build output, dependencies, local environment files, and test artifacts. The owner-provided public form identifier is configured. See `VERIFICATION.md` for actual submission checks and remaining Gmail inbox confirmation.
 
 ## Contact redesign verification
 

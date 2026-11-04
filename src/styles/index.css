@@ -2340,3 +2340,11 @@ h1 > .hero-title-lines { display: block; color: var(--text); }
 .contact-dialog-fallback a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
 @keyframes contact-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 @media (max-width:600px) { .contact-form-panel { padding: 26px 20px; } .contact-form-panel .field input, .contact-form-panel .field select, .contact-form-panel .field textarea { font-size: 16px; } .contact-dialog-close { top: 15px; right: 15px; } .contact-dialog-fallback { padding: 0 20px 25px; } }
+
+/* Keep configuration failures honest and long-dialog controls accessible. */
+.form-availability { display: flex; align-items: flex-start; gap: 12px; padding: 16px; margin-bottom: 25px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.form-availability > svg { flex-shrink: 0; color: var(--accent); margin-top: 2px; }
+.form-availability strong { display: block; font-size: 12px; line-height: 1.6; }
+.form-availability p { font-size: 11px; color: var(--muted); line-height: 1.8; margin: 6px 0 0; }
+.contact-dialog-toolbar { position: sticky; top: 0; height: 0; z-index: 3; }
+.field-hint { display: block; margin-top: 8px; color: var(--muted); font-size: 10px; line-height: 1.6; }

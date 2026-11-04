@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { services } from "../data/portfolio.js";
 import {
   pageOptions,
@@ -15,6 +15,7 @@ import {
 } from "../utils/inquiry.js";
 import { Icon } from "./UI.jsx";
 import { submitToWeb3Forms } from "../utils/web3forms.js";
+import { getWeb3FormsAccessKey, hasWeb3FormsAccessKey } from "../config/web3forms.js";
 
 function Field({ name, label, required, error, children }) {
   return (
@@ -46,6 +47,13 @@ export default function InquiryForm({
   const submitting = useRef(false);
   const form = useRef(null);
   const projectDetails = useRef(null);
+  const feedback = useRef(null);
+  const canSend = sendInquiry !== submitToWeb3Forms || hasWeb3FormsAccessKey(getWeb3FormsAccessKey());
+  useEffect(() => {
+    if (!apiError && !successMessage) return;
+    const dialog = form.current?.closest("dialog");
+    if (!dialog || dialog.open) feedback.current?.focus();
+  }, [apiError, successMessage]);
   const current = { ...values, service };
   const errors = validationShown ? validateContact(current) : {};
   const hasValidationErrors = Object.values(errors).some(Boolean);
@@ -82,6 +90,7 @@ export default function InquiryForm({
   };
   const submit = async (event) => {
     event.preventDefault();
+    if (!canSend) { prepare(event); return; }
     if (submitting.current || !validate()) return;
     submitting.current = true;
     setPrepared(false);
@@ -160,6 +169,7 @@ export default function InquiryForm({
         <p>Tell me what you have in mind. I’ll reply to your email to discuss the next step.</p>
         <span>Fields marked * are required.</span>
       </div>
+      {!canSend && <div className="form-availability" role="status"><Icon name="mail" size={19} /><div><strong>Send your brief by email or WhatsApp</strong><p>Online sending is temporarily unavailable. You can still fill in this form and prepare a message below. Nothing is sent until you send it in your email or WhatsApp app.</p></div></div>}
       <form aria-labelledby="inquiry-title" ref={form} onSubmit={submit} noValidate aria-busy={isSending}>
         <input
           type="checkbox"
@@ -224,11 +234,13 @@ export default function InquiryForm({
             <textarea
               {...attributes("message")}
               rows={5}
+              aria-describedby={[errors.message ? "message-error" : "", "message-hint"].filter(Boolean).join(" ")}
               minLength={20}
               maxLength={3000}
               required
               placeholder="Your goals, desired features, and anything I should know…"
             />
+            <span className="field-hint" id="message-hint">At least 20 characters · {values.message.length}/3000</span>
           </Field>
           <details className="project-details" ref={projectDetails}>
             <summary><span>Additional project details <small>Optional</small></span><Icon name="plus" size={18} /></summary>
@@ -295,14 +307,13 @@ export default function InquiryForm({
             className="button form-submit"
             disabled={isSending}
           >
-            {isSending ? "Sending…" : "Send message"}{" "}
+            {isSending ? "Sending…" : canSend ? "Send message" : "Prepare email / WhatsApp message"}{" "}
             <Icon name="right" size={18} />
           </button>
           <p className="privacy-note">
-            No email app needed. Your message is submitted directly, and I’ll
-            reply to the email address you provide.
+            {canSend ? "No email app needed. Your message is submitted directly, and I’ll reply to the email address you provide." : "Preparing a draft does not submit your inquiry. Review and send it using one of the actions below."}
           </p>
-          <button
+          {canSend && <button
             type="button"
             className="text-link"
             style={{ marginTop: 14, background: "transparent", padding: 0 }}
@@ -310,7 +321,7 @@ export default function InquiryForm({
           >
             Prefer email or WhatsApp? Prepare a draft{" "}
             <Icon name="arrow" size={15} />
-          </button>
+          </button>}
           {validPrepared && (
             <div className="prepared-actions">
               <a className="button" href={emailLink(message)}>
@@ -330,8 +341,8 @@ export default function InquiryForm({
           )}
         </fieldset>
         {isSending && <p className="submission-loading" role="status"><span className="sending-dot" aria-hidden="true"/>Sending your inquiry…</p>}
-        {apiError && <div className="submission-alert submission-error" role="alert"><div><strong>Message not sent</strong><p>{apiError}</p></div><button type="button" className="icon-button" aria-label="Dismiss submission error" onClick={() => setApiError('')}><Icon name="close" size={16}/></button></div>}
-        {successMessage && <div className="submission-alert submission-success" role="status"><Icon name="check" size={20}/><div><strong>Message submitted</strong><p>{successMessage}</p></div></div>}
+        {apiError && <div ref={feedback} tabIndex={-1} className="submission-alert submission-error" role="alert"><div><strong>Message not sent</strong><p>{apiError}</p></div><button type="button" className="icon-button" aria-label="Dismiss submission error" onClick={() => setApiError('')}><Icon name="close" size={16}/></button></div>}
+        {successMessage && <div ref={feedback} tabIndex={-1} className="submission-alert submission-success" role="status"><Icon name="check" size={20}/><div><strong>Message submitted</strong><p>{successMessage}</p></div></div>}
         {validPrepared && <p className="form-status draft-status" role="status">Your draft is ready. Review and send it in your email or WhatsApp app. This draft has not been submitted.</p>}
       </form>
     </div>

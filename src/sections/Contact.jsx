@@ -123,10 +123,12 @@ export default function Contact({ service, onServiceChange, request = 0 }) {
         onCancel={() => setOpen(false)}
         onClick={closeFromBackdrop}
       >
+        <div className="contact-dialog-toolbar">
         <button type="button" className="icon-button contact-dialog-close"
           aria-label="Close contact form" onClick={() => setOpen(false)}>
           <Icon name="close" size={20} />
         </button>
+        </div>
         <InquiryForm service={service} onServiceChange={onServiceChange} />
         <p className="contact-dialog-fallback">Or email me directly at <a href={emailLink()}>{profile.email}</a></p>
       </dialog>
