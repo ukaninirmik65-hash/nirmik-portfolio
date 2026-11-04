@@ -108,7 +108,13 @@ Anita and school previews are screenshots from their real deployments. Other pro
 
 Import [the public GitHub repository](https://github.com/ukaninirmik65-hash/nirmik-portfolio) into Vercel. Select the **Vite** preset, build command **`npm run build`**, and output directory **`dist`**. Use the folder containing `package.json` as the project root. Configure `VITE_WEB3FORMS_ACCESS_KEY` before building/deploying.
 
-After deployment, test form choices, navigation, theme switching, and email/WhatsApp links. Add a canonical URL and `og:url` in `index.html` once a real domain is known. No fabricated domain or public deployment is included.
+After deployment, test form choices, navigation, theme switching, and email/WhatsApp links.
+
+## Google Search Console sitemap
+
+The public website URL is `https://nirmik-portfolio.vercel.app/`. Vite copies `public/sitemap.xml` and `public/robots.txt` to the production build root. The sitemap lists the homepage only because the navigation sections are anchors on that single page, not separate pages.
+
+After deploying, open `https://nirmik-portfolio.vercel.app/sitemap.xml` and verify it returns XML. In Google Search Console, select the property for this website, open **Sitemaps**, enter `sitemap.xml`, and submit. `robots.txt` also advertises the sitemap. If the website domain changes, update both files before redeploying.
 
 See [Vercel's official Vite documentation](https://vercel.com/docs/frameworks/frontend/vite).
 
