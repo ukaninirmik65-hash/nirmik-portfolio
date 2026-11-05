@@ -21,6 +21,7 @@ import Projects from "./sections/Projects.jsx";
 import { Services, Process, FAQ } from "./sections/Services.jsx";
 import Contact from "./sections/Contact.jsx";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import GoogleAnalytics from "./components/GoogleAnalytics.jsx";
 
 function Progress() {
@@ -45,6 +46,7 @@ export default function App() {
   return (
     <MotionConfig reducedMotion="user">
       <Analytics />
+      <SpeedInsights />
       <GoogleAnalytics />
       <a className="skip-link" href="#main">
         Skip to content

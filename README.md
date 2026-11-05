@@ -111,7 +111,7 @@ After deployment, test form choices, navigation, theme switching, and email/What
 
 ## Analytics
 
-Vercel Web Analytics is included once at the application root. It does not need a client-side environment variable.
+Vercel Web Analytics and Vercel Speed Insights are each included once at the application root. Neither needs a client-side environment variable. Enable both features in the Vercel project dashboard after deployment.
 
 Google Analytics 4 is intentionally inactive until you provide a web data-stream Measurement ID. Copy `.env.example` to `.env.local` for local testing, or add this environment variable in Vercel and redeploy:
 
@@ -121,7 +121,7 @@ VITE_GA4_MEASUREMENT_ID=YOUR_GA4_MEASUREMENT_ID
 
 The ID is public configuration and is not included in this repository. In Google Analytics, create or select the GA4 property, create a Web data stream for `https://nirmik-portfolio.vercel.app/`, and copy its Measurement ID. The integration sends an initial `page_view` plus virtual views when the portfolio hash changes, such as `#projects` and `#contact`. To avoid duplicate SPA page views, turn off **Page changes based on browser history events** under the data stream's Enhanced Measurement page-view advanced settings.
 
-After deployment, enable Web Analytics in Vercel's project dashboard. For GA4, use **Admin → Data streams → your Web stream → DebugView**, then navigate between portfolio sections. You should see one `page_view` per section navigation. Vercel Analytics data can take time to appear in its dashboard.
+After deployment, enable Web Analytics and Speed Insights in Vercel's project dashboard. For GA4, use **Admin → Data streams → your Web stream → DebugView**, then navigate between portfolio sections. You should see one `page_view` per section navigation. Vercel Analytics and Speed Insights data can take time to appear in their dashboards.
 
 ## Google Search Console sitemap
 
