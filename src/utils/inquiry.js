@@ -10,17 +10,25 @@ const contains = (options, value) =>
   options.some((option) => option.value === value);
 const labelFor = (options, value) =>
   options.find((option) => option.value === value)?.label || "Not specified";
+export function isValidContactEmail(value) {
+  const email = value.trim();
+  const parts = email.split("@");
+  if (email.length > 254 || parts.length !== 2) return false;
+  const [local, domain] = parts;
+  if (!local || local.length > 64 || local.startsWith(".") || local.endsWith(".") || local.includes("..")) return false;
+  if (!/^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+$/.test(local)) return false;
+  const labels = domain.split(".");
+  return labels.length > 1 && labels.every(label => /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?$/.test(label));
+}
 export function validateInquiry(values) {
   const errors = {};
   if (!values.name.trim()) errors.name = "Please enter your name.";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim()))
+  if (!isValidContactEmail(values.email))
     errors.email = "Please enter a valid email address.";
   const phone = (values.phone || "").trim();
   if (
     phone &&
-    (!/^[+\d\s().-]+$/.test(phone) ||
-      phone.replace(/\D/g, "").length < 7 ||
-      phone.replace(/\D/g, "").length > 15)
+    !/^\+?\d{7,15}$/.test(phone.replace(/[\s().-]/g, ""))
   )
     errors.phone =
       "Please enter a valid phone number, including country code if applicable.";

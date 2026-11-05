@@ -2,6 +2,10 @@
 
 A responsive React/Vite portfolio for Nirmik Ukani. It includes Home, About, Skills, Experience, Projects, Services, Work Process, Contact, and a short FAQ. The design uses charcoal, warm white, and a soft green accent, with dark/light modes and purposeful motion.
 
+See [FINAL-QA-REPORT.md](FINAL-QA-REPORT.md) for the current audit, fixed issues, measured Lighthouse scores and remaining limitations. Earlier verification documents contain historical results.
+
+Fonts are self-hosted with their Open Font Licenses in `public/fonts/`. The portrait uses a pixel-identical, full-resolution lossless WebP delivery source; the exact original PNG remains included as its fallback. No image resizing or lossy compression is applied.
+
 ## Run locally
 
 1. Extract the complete ZIP.

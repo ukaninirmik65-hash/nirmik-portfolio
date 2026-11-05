@@ -45,6 +45,7 @@ export default function InquiryForm({
   const [successMessage, setSuccessMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
   const submitting = useRef(false);
+  const inFlightService = useRef("");
   const form = useRef(null);
   const projectDetails = useRef(null);
   const feedback = useRef(null);
@@ -54,7 +55,18 @@ export default function InquiryForm({
     const dialog = form.current?.closest("dialog");
     if (!dialog || dialog.open) feedback.current?.focus();
   }, [apiError, successMessage]);
-  const current = { ...values, service };
+  useEffect(() => {
+    if (submitting.current && service !== inFlightService.current) {
+      // Service-card requests may reopen the modal, but cannot mutate a pending brief.
+      onServiceChange(inFlightService.current);
+      return;
+    }
+    if (service) {
+      setSuccessMessage("");
+      setPrepared(false);
+    }
+  }, [service, onServiceChange]);
+  const current = { ...values, service: submitting.current ? inFlightService.current : service };
   const errors = validationShown ? validateContact(current) : {};
   const hasValidationErrors = Object.values(errors).some(Boolean);
   const update = (event) => {
@@ -90,9 +102,12 @@ export default function InquiryForm({
   };
   const submit = async (event) => {
     event.preventDefault();
+    if (submitting.current) return;
+    setSuccessMessage('');
     if (!canSend) { prepare(event); return; }
-    if (submitting.current || !validate()) return;
+    if (!validate()) return;
     submitting.current = true;
+    inFlightService.current = current.service;
     setPrepared(false);
     setApiError('');
     setSuccessMessage('');
@@ -153,7 +168,9 @@ export default function InquiryForm({
     prepared && preparedFor.current === JSON.stringify(current);
   function prepare(event) {
     event.preventDefault();
-    if (submitting.current || !validate()) return;
+    if (submitting.current) return;
+    setSuccessMessage("");
+    if (!validate()) return;
     preparedFor.current = JSON.stringify(current);
     setPrepared(true);
     setSuccessMessage('');

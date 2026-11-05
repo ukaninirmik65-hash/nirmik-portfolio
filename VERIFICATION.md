@@ -1,5 +1,7 @@
 # Verification — 3 November 2026
 
+**Historical record, superseded by [FINAL-QA-REPORT.md](FINAL-QA-REPORT.md).** The public Web3Forms form identifier has since been configured, and the owner has confirmed real Inbox delivery. The old missing-key statements below describe the initial implementation, not the current project.
+
 ## Latest update: Web3Forms integration
 
 **Implemented with an access-key placeholder. A real successful Web3Forms submission and email delivery are NOT verified. No access key has been supplied.** Follow the configuration and real-inbox checklist in README before considering delivery live.

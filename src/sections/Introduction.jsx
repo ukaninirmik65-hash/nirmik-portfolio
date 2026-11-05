@@ -27,6 +27,7 @@ function Role() {
   return (
     <span
       className="rotating-role"
+      role="group"
       aria-label="Frontend Developer, React.js Developer, Freelance Web Developer"
     >
       <AnimatePresence mode="wait">
@@ -91,6 +92,8 @@ export function Hero() {
             <span>THE PERSON BEHIND THE PIXELS</span>
             <Icon name="arrow" size={18} />
           </div>
+          <picture className="profile-picture">
+          <source srcSet={profile.photoOptimized} type="image/webp" />
           <img
             className="profile-photo"
             src={profile.photo}
@@ -99,6 +102,7 @@ export function Hero() {
             height={profile.photoHeight}
             fetchPriority="high"
           />
+          </picture>
           <div className="portrait-caption">
             <div>
               <strong>Nirmik Ukani</strong>

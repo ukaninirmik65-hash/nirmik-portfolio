@@ -1,5 +1,7 @@
 # Contact form and portfolio QA — 4 November 2026
 
+Historical checks below. The current 5 November audit, fixes and limitations are documented in [FINAL-QA-REPORT.md](FINAL-QA-REPORT.md).
+
 ## Resolved screenshot issue
 
 The screenshot showed an unconfigured Web3Forms form, not a validation failure. The owner supplied the public Web3Forms form identifier, which is now configured in the frontend with an optional Vite environment override. No Gmail password or private account token is used.

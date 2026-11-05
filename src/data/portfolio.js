@@ -6,6 +6,7 @@ export const profile = {
   whatsapp: "919714558126",
   location: "Gujarat, India",
   photo: "/images/nirmik-ukani.png",
+  photoOptimized: "/images/nirmik-ukani-lossless.webp",
   photoWidth: 1122,
   photoHeight: 1402,
   resume: null,
