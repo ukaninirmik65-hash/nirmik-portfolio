@@ -20,6 +20,7 @@ import {
 import Projects from "./sections/Projects.jsx";
 import { Services, Process, FAQ } from "./sections/Services.jsx";
 import Contact from "./sections/Contact.jsx";
+import { Analytics } from "@vercel/analytics/next";
 
 function Progress() {
   const { scrollYProgress } = useScroll();
@@ -42,6 +43,7 @@ export default function App() {
   };
   return (
     <MotionConfig reducedMotion="user">
+      <Analytics></Analytics>
       <a className="skip-link" href="#main">
         Skip to content
       </a>
@@ -57,7 +59,11 @@ export default function App() {
         <Services onSelect={discussService} />
         <Process />
         <FAQ />
-        <Contact service={service} onServiceChange={setService} request={contactRequest} />
+        <Contact
+          service={service}
+          onServiceChange={setService}
+          request={contactRequest}
+        />
       </main>
       <footer className="footer wrap">
         <div className="footer-top">
