@@ -2333,12 +2333,20 @@ h1 > .hero-title-lines { display: block; color: var(--text); }
 .contact-dialog-toolbar { position: sticky; top: 0; height: 0; z-index: 3; }
 .field-hint { display: block; margin-top: 8px; color: var(--muted); font-size: 10px; line-height: 1.6; }
 
+/* Cursor semantics: decoration never overrides editing or disabled controls. */
+body { cursor: default; }
+:where(a[href], summary, [role="button"], [role="link"], button:not(:disabled), select, input[type="checkbox"], input[type="radio"], label[for]) { cursor: pointer; }
+:where(input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="range"]):not([type="color"]), textarea, [contenteditable]:not([contenteditable="false"]), [data-selectable-text]) { cursor: text; }
+:disabled, [aria-disabled="true"], :is(button, input, select, textarea, a, summary, [role="button"], [role="link"]):is(:disabled, [aria-disabled="true"]) { cursor: not-allowed; }
+[aria-busy="true"] :is(input, textarea, select, button):disabled { cursor: wait; }
+
 /* Code cursor: decorative, compositor-only movement with native input fallbacks. */
 .cursor-toggle, .developer-cursor { display: none; }
 @media (hover: hover) and (pointer: fine) and (min-width: 781px) and (prefers-reduced-motion: no-preference) and (forced-colors: none) {
   .cursor-toggle { display: inline-flex; }
   .cursor-toggle[aria-pressed="true"] { color: var(--accent); }
-  html.developer-cursor-active, html.developer-cursor-active * { cursor: none !important; }
+  html.developer-cursor-active, html.developer-cursor-active body { cursor: none; }
+  html.developer-cursor-active :where(a[href], summary, button, [role="button"], [role="link"]):not(:disabled):not([aria-disabled="true"]):not([data-native-cursor]) { cursor: none; }
   .developer-cursor { display: block; position: fixed; inset: 0; z-index: 9999; pointer-events: none; user-select: none; opacity: 0; contain: layout style; --cursor-halo: rgba(208,239,156,.13); }
   :root[data-theme="light"] .developer-cursor { --cursor-halo: rgba(60,95,20,.1); }
   .developer-cursor[data-visible="true"] { opacity: 1; }

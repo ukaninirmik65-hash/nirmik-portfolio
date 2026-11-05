@@ -3,31 +3,45 @@ import { profile } from "../data/portfolio.js";
 import { whatsappLink, emailLink } from "../utils/inquiry.js";
 import { Icon, Reveal, Socials } from "../components/UI.jsx";
 import InquiryForm from "../components/InquiryForm.jsx";
+import { isBackdropPoint, lockBodyScroll } from "../utils/interactions.js";
 
 export default function Contact({ service, onServiceChange, request = 0 }) {
   const [copyStatus, setCopyStatus] = useState("");
   const [open, setOpen] = useState(false);
   const dialog = useRef(null);
+  const startedOnBackdrop = useRef(false);
   useEffect(() => {
     if (request) setOpen(true);
   }, [request]);
   useEffect(() => {
     if (!open) return;
     const element = dialog.current;
-    const previousOverflow = document.body.style.overflow;
-    element.showModal();
-    document.body.style.overflow = "hidden";
+    if (!element?.isConnected) return;
+    startedOnBackdrop.current = false;
+    if (!element.open) element.showModal();
+    const unlockScroll = lockBodyScroll();
     element.querySelector('input[name="name"]')?.focus({ preventScroll: true });
     return () => {
-      document.body.style.overflow = previousOverflow;
-      if (element.open) element.close();
+      unlockScroll();
+      startedOnBackdrop.current = false;
+      if (element.isConnected && element.open) element.close();
     };
   }, [open]);
+  const beginBackdropPress = (event) => {
+    startedOnBackdrop.current =
+      event.button === 0 && isBackdropPoint(event, event.currentTarget);
+  };
   const closeFromBackdrop = (event) => {
-    if (event.target !== event.currentTarget) return;
-    const box = event.currentTarget.getBoundingClientRect();
-    if (event.clientX < box.left || event.clientX > box.right ||
-        event.clientY < box.top || event.clientY > box.bottom) setOpen(false);
+    const shouldClose =
+      startedOnBackdrop.current &&
+      event.detail > 0 &&
+      isBackdropPoint(event, event.currentTarget);
+    startedOnBackdrop.current = false;
+    if (shouldClose) setOpen(false);
+  };
+  const syncNativeClose = (event) => {
+    // A queued close event from an earlier opening must not close a reopened dialog.
+    if (!event.currentTarget.open) setOpen(false);
   };
   const copy = async () => {
     try {
@@ -101,16 +115,31 @@ export default function Contact({ service, onServiceChange, request = 0 }) {
             </div>
           </Reveal>
           <Reveal className="contact-invite">
-            <span className="contact-invite-icon"><Icon name="message" size={30} /></span>
+            <span className="contact-invite-icon">
+              <Icon name="message" size={30} />
+            </span>
             <p className="eyebrow">A GOOD PROJECT STARTS WITH A HELLO</p>
-            <h3>Your next idea.<br /><em>Let’s talk about it.</em></h3>
-            <p>A new website, a React interface, or a frontend fix. Share a few details and let’s see how I can help.</p>
-            <button type="button" className="button" onClick={() => setOpen(true)}>
+            <h3>
+              Your next idea.
+              <br />
+              <em>Let’s talk about it.</em>
+            </h3>
+            <p>
+              A new website, a React interface, or a frontend fix. Share a few
+              details and let’s see how I can help.
+            </p>
+            <button
+              type="button"
+              className="button"
+              onClick={() => setOpen(true)}
+            >
               Start a conversation <Icon name="arrow" size={19} />
             </button>
             <div className="contact-invite-footer">
               <Icon name="mail" size={16} />
-              <span>Prefer email? <a href={emailLink()}>Write to me directly</a></span>
+              <span>
+                Prefer email? <a href={emailLink()}>Write to me directly</a>
+              </span>
             </div>
           </Reveal>
         </div>
@@ -119,18 +148,31 @@ export default function Contact({ service, onServiceChange, request = 0 }) {
         ref={dialog}
         className="contact-dialog"
         aria-labelledby="inquiry-title"
-        onClose={() => setOpen(false)}
-        onCancel={() => setOpen(false)}
+        onClose={syncNativeClose}
+        onCancel={(event) => {
+          event.preventDefault();
+          setOpen(false);
+        }}
+        onPointerDown={beginBackdropPress}
+        onPointerCancel={() => {
+          startedOnBackdrop.current = false;
+        }}
         onClick={closeFromBackdrop}
       >
         <div className="contact-dialog-toolbar">
-        <button type="button" className="icon-button contact-dialog-close"
-          aria-label="Close contact form" onClick={() => setOpen(false)}>
-          <Icon name="close" size={20} />
-        </button>
+          <button
+            type="button"
+            className="icon-button contact-dialog-close"
+            aria-label="Close contact form"
+            onClick={() => setOpen(false)}
+          >
+            <Icon name="close" size={20} />
+          </button>
         </div>
         <InquiryForm service={service} onServiceChange={onServiceChange} />
-        <p className="contact-dialog-fallback">Or email me directly at <a href={emailLink()}>{profile.email}</a></p>
+        <p className="contact-dialog-fallback">
+          Or email me directly at <a href={emailLink()}>{profile.email}</a>
+        </p>
       </dialog>
     </section>
   );

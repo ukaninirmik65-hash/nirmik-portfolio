@@ -59,3 +59,36 @@ Remote project/social sites can change independently. The checks above are brows
 - Reviewed both color themes and favicon sizes 16, 24, 32 and 48px. Website favicon changes with the theme toggle and retains the correct theme after reload.
 - Browser checks at desktop, 768px tablet and 320px mobile widths: no horizontal overflow, working mobile menu, five correct logo placements, no broken images or console errors.
 - Global theme colors, form fields/submission, project data, photo and section content are unchanged. No logo-processing tools or font files are shipped as dependencies.
+
+## Outside-click and cursor fixes — 5 November 2026
+
+### Changes and root causes
+
+- DeveloperCursor previously hid itself over paragraph/heading/list text and reappeared over child containers. It now uses consistent target classification, so ordinary text no longer causes repeated custom/native cursor swaps. Selection drags and editing still use the native cursor.
+- Removed the blanket cursor:none!important rule; explicit native/default, interactive, editable, disabled and busy semantics now coexist with the custom cursor. Captured cursor nodes and a disposal guard prevent late animation callbacks from reading cleared refs. Cursor preference updates are kept out of state updater callbacks.
+- The mobile menu focus trap no longer assumes its ref or focus targets are present. Outside-pointer detection validates connected containers and Node targets and respects composed event paths. All listener registration/removal pairs remain balanced.
+- Backdrop dismissal now requires a primary press that both begins and ends outside the dialog. Dragging text or a scrollbar from inside the form to outside cannot dismiss it. Queued close events from an earlier opening cannot close a currently reopened native dialog.
+- The menu and contact dialog share a reference-counted body scroll lock. Closing overlays in either order cannot prematurely unlock the page or leave it permanently locked.
+
+### Verification
+
+- All **21 automated tests** pass, including four new regression tests covering lock release ordering/idempotence, invalid/missing outside targets, composed paths, backdrop hit testing and stable cursor classifications.
+- Browser viewport checks: 1440px desktop, 1366×768 laptop, and 390px mobile. These are Chromium viewport checks, not a claim of testing every physical device or browser engine.
+- Real coordinate-based backdrop click closed the form and unlocked scrolling. Five repeated open/outside-close cycles all ended closed and unlocked, with draft data preserved when reopening.
+- A real text-selection drag from inside the dialog to outside left the dialog open, selection highlighted, native cursor restored and scroll lock intact.
+- Native dropdown open/Escape/select interactions kept the dialog open; optional pages/timeline selections remained intact.
+- Outside-menu clicks dismissed the menu. Opening the form while the mobile menu was open correctly closed the menu, kept the modal scroll lock, and released scrolling after Escape.
+- With custom cursor disabled, paragraphs/headings/cards showed default, links/buttons showed pointer, fields showed text, and busy disabled inputs/buttons showed wait. With custom cursor enabled, paragraph/heading state stayed default and filter buttons were interactive. The tested pointer at 150×300 produced an exact translate3d(150px,300px,0) tip position.
+- Cursor opt-out persisted across reload; input text selection and project filters worked. No browser console warnings or errors observed in the tested flows.
+- No intermittent application crash was reproduced during these checks; the unsafe ref/target paths and close-state race identified in code were corrected rather than masked by error suppression.
+- Logo, navbar layout, colors, content, responsive structure, animations, form payloads and Web3Forms submission code were preserved.
+
+### Exact modified files
+
+- src/components/DeveloperCursor.jsx
+- src/components/Header.jsx
+- src/sections/Contact.jsx
+- src/styles/index.css
+- src/utils/interactions.js (new)
+- tests/interactions.test.js (new)
+- QA-REPORT.md
