@@ -20,7 +20,8 @@ import {
 import Projects from "./sections/Projects.jsx";
 import { Services, Process, FAQ } from "./sections/Services.jsx";
 import Contact from "./sections/Contact.jsx";
-import { Analytics } from "@vercel/analytics/next";
+import { Analytics } from "@vercel/analytics/react";
+import GoogleAnalytics from "./components/GoogleAnalytics.jsx";
 
 function Progress() {
   const { scrollYProgress } = useScroll();
@@ -44,6 +45,7 @@ export default function App() {
   return (
     <MotionConfig reducedMotion="user">
       <Analytics />
+      <GoogleAnalytics />
       <a className="skip-link" href="#main">
         Skip to content
       </a>

@@ -105,9 +105,23 @@ Anita and school previews are screenshots from their real deployments. Other pro
 
 ## Vercel deployment
 
-Import [the public GitHub repository](https://github.com/ukaninirmik65-hash/nirmik-portfolio) into Vercel. Select the **Vite** preset, build command **`npm run build`**, and output directory **`dist`**. Use the folder containing `package.json` as the project root. The included public form identifier works by default; `VITE_WEB3FORMS_ACCESS_KEY` is an optional override.
+Import [the public GitHub repository](https://github.com/ukaninirmik65-hash/nirmik-portfolio) into Vercel. Select the **Vite** preset, build command **`npm run build`**, and output directory **`dist`**. Use the folder containing `package.json` as the project root. The included public form identifier works by default; `VITE_WEB3FORMS_ACCESS_KEY` is an optional override. Vercel Web Analytics is integrated through the official React component; enable it in the Vercel dashboard for this project after deployment.
 
 After deployment, test form choices, navigation, theme switching, and email/WhatsApp links.
+
+## Analytics
+
+Vercel Web Analytics is included once at the application root. It does not need a client-side environment variable.
+
+Google Analytics 4 is intentionally inactive until you provide a web data-stream Measurement ID. Copy `.env.example` to `.env.local` for local testing, or add this environment variable in Vercel and redeploy:
+
+```bash
+VITE_GA4_MEASUREMENT_ID=YOUR_GA4_MEASUREMENT_ID
+```
+
+The ID is public configuration and is not included in this repository. In Google Analytics, create or select the GA4 property, create a Web data stream for `https://nirmik-portfolio.vercel.app/`, and copy its Measurement ID. The integration sends an initial `page_view` plus virtual views when the portfolio hash changes, such as `#projects` and `#contact`. To avoid duplicate SPA page views, turn off **Page changes based on browser history events** under the data stream's Enhanced Measurement page-view advanced settings.
+
+After deployment, enable Web Analytics in Vercel's project dashboard. For GA4, use **Admin → Data streams → your Web stream → DebugView**, then navigate between portfolio sections. You should see one `page_view` per section navigation. Vercel Analytics data can take time to appear in its dashboard.
 
 ## Google Search Console sitemap
 
@@ -119,7 +133,7 @@ See [Vercel's official Vite documentation](https://vercel.com/docs/frameworks/fr
 
 ## Accessibility and performance
 
-Semantic headings and landmarks, labeled inputs, visible keyboard focus, a skip link, keyboard-friendly mobile navigation, reduced-motion support, responsive images, and lazy-loaded project screenshots are included. Motion is the only animation engine; native scrolling avoids extra scroll libraries. Fonts use Google Fonts with `display=swap` and system fallbacks. No analytics or tracking is installed.
+Semantic headings and landmarks, labeled inputs, visible keyboard focus, a skip link, keyboard-friendly mobile navigation, reduced-motion support, responsive images, and lazy-loaded project screenshots are included. Motion is the only animation engine; native scrolling avoids extra scroll libraries. Fonts are self-hosted with `font-display: swap`. Vercel Web Analytics is integrated and GA4 is optional environment-configured tracking.
 
 See `VERIFICATION.md` for the checks actually performed. This is not a formal accessibility certification.
 
