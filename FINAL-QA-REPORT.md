@@ -125,7 +125,8 @@ Remaining mobile diagnostics include image delivery, approximately 64 KiB of unu
 - **PASS:** source review found no Gmail password, private API token or private-key pattern in the tested source/assets/configuration. Web3Forms uses a public form identifier; a Vite client variable is not private secret storage. Real environment files, node_modules, artifacts and ZIPs remain ignored by Git.
 - **PASS:** external new-tab links retain `noopener noreferrer`; user text is rendered through React; no automatic pricing added. Sitemap/robots keep the supplied canonical public URL.
 - **BLOCKED:** lint and type-check commands are not configured in this JavaScript repository. No invented lint/type-check pass is reported.
-- **Deployment:** local production build verified. Publication and live-bundle verification are recorded below after completion; local success alone does not establish production deployment.
+- **PASS — Deployment:** source commit `6a02955ffe1ae4d88a7755431c74c97773b65e15` pushed to `codex/portfolio` in `ukaninirmik65-hash/nirmik-portfolio`. GitHub's Vercel status reports successful deployment. The public site serves the tested `index-pLZx7EW9.js` and `index-CXPgsX2a.css` bundles. Downloaded live JS, CSS, lossless portrait and both font files compare byte-for-byte with the tested build. Sitemap and robots return HTTP 200 with the correct canonical URL (deployment line endings differ from the local Windows copy).
+- **PASS — Live smoke test:** opened `https://nirmik-portfolio.vercel.app/`, confirmed the portrait and contact dialog, and reproduced malformed email/phone values. Both were correctly rejected with readable red field errors. No second real email was sent during this live smoke test; the real Inbox confirmation above belongs to the identical local production build.
 
 ## Exact files changed by this audit
 
