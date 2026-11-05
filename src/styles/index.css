@@ -1460,8 +1460,8 @@ summary::-webkit-details-marker {
   color: #e2aa98;
   margin-top: 8px;
 }
-:root[data-theme="light"] .field-error {
-  color: #9e3516;
+:root[data-theme="light"] .inquiry-panel .field-error {
+  color: var(--form-error);
 }
 .feature-options {
   border: 0;
@@ -2402,3 +2402,54 @@ body { cursor: default; }
 .brand-logo .brand-name { fill: var(--text); }
 .signature > .brand-logo { width: 38px; height: 38px; }
 .brand-invite-mark > .brand-logo { color: var(--ink); }
+
+/* Validation feedback is scoped to the shared Contact / Project Inquiry form. */
+.inquiry-panel {
+  --form-error: #ff858d;
+  --form-error-border: #e95d69;
+  --form-error-tint: rgba(233, 93, 105, .08);
+  --form-error-ring: rgba(233, 93, 105, .2);
+}
+:root[data-theme="light"] .inquiry-panel {
+  --form-error: #b42332;
+  --form-error-border: #c73545;
+  --form-error-tint: rgba(180, 35, 50, .055);
+  --form-error-ring: rgba(180, 35, 50, .16);
+}
+.inquiry-panel .field [aria-invalid="true"] {
+  border-color: var(--form-error-border);
+  background-image: linear-gradient(var(--form-error-tint), var(--form-error-tint));
+}
+.inquiry-panel .field [aria-invalid="true"]:focus {
+  border-color: var(--form-error-border);
+  outline-color: var(--form-error-border);
+  box-shadow: 0 0 0 3px var(--form-error-ring);
+}
+.inquiry-panel .field-error {
+  color: var(--form-error);
+  font-size: 12px;
+  line-height: 1.65;
+  margin-top: 8px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.inquiry-panel .validation-summary,
+.inquiry-panel .submission-error {
+  color: var(--form-error);
+  border-color: var(--form-error-border);
+  background: var(--form-error-tint);
+  font-size: 12px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+.inquiry-panel .submission-error .icon-button { color: var(--form-error); }
+.inquiry-panel .submission-error:focus { outline-color: var(--form-error-border); }
+.inquiry-panel .submission-success { background: var(--surface-high); }
+.inquiry-panel .submission-success strong { color: var(--accent); }
+.inquiry-panel .field :is(input, select, textarea):disabled {
+  color: var(--muted);
+  opacity: .65;
+  background-image: none;
+}
+.inquiry-panel fieldset:disabled .field > label,
+.inquiry-panel fieldset:disabled .feature-options > label { color: var(--muted); }

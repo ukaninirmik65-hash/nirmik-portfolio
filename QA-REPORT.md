@@ -92,3 +92,14 @@ Remote project/social sites can change independently. The checks above are brows
 - src/utils/interactions.js (new)
 - tests/interactions.test.js (new)
 - QA-REPORT.md
+
+## Validation visual feedback — 5 November 2026
+
+- CSS-only styling update to the shared Contact / Project Inquiry component; fields, choices, validation rules, submission handlers and API configuration were not modified.
+- Invalid fields use clear theme-specific red borders and a subtle tint; focused invalid fields retain a red outline/ring rather than the normal green accent. Error messages use readable 12px red text and wrap naturally.
+- Normal fields retain existing theme styling and focus accent. Disabled controls are muted. Only the existing confirmed-submission message receives the green success treatment; no :valid or empty-optional-field success decoration was added.
+- Browser verified no errors before validation, field-specific errors after validation, and removal of styling and summary when values are corrected. Invalid email and optional phone values were checked. Both the Contact and service-prefilled Project Inquiry entry points were used.
+- Dark/light themes and desktop 1440px plus mobile 390px/320px layouts were checked: no overlapping or clipped messages and no horizontal overflow.
+- Error-message foreground/background contrast computes to 7.74:1 dark and 5.90:1 light using the actual form panel colors. This calculation is not a full accessibility audit.
+- Mock transport checks confirmed red failure feedback without success, muted disabled inputs while sending, and green confirmation only after explicit mock success. No new real emails were sent.
+- Production build and all 21 existing tests pass. No browser console warnings or errors observed.
